@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CreditBook – Your Smart Debt Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #FE2C55;
+      --black: #111111;
+      --gray: #555555;
+      --light: #f7f7f7;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 5%;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      background: var(--white);
+      z-index: 100;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+    }
+    .nav-logo span {
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.3px;
+    }
+    .nav-cta {
+      background: var(--red);
+      color: var(--white);
+      text-decoration: none;
+      padding: 9px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* HERO */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 80px 5% 70px;
+      gap: 0;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff0f3;
+      color: var(--red);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      letter-spacing: 0.3px;
+    }
+    .hero img {
+      width: 110px;
+      height: 110px;
+      border-radius: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 32px rgba(254,44,85,0.18);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      max-width: 620px;
+      margin-bottom: 18px;
+    }
+    .hero h1 span { color: var(--red); }
+    .hero p {
+      font-size: 1rem;
+      color: var(--gray);
+      max-width: 520px;
+      margin-bottom: 36px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--red);
+      color: var(--white);
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary svg { flex-shrink: 0; }
+    .hero-rating {
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gray);
+      font-size: 0.82rem;
+    }
+    .stars { color: var(--red); font-size: 1rem; letter-spacing: 1px; }
+
+    /* DIVIDER */
+    .divider {
+      width: 48px;
+      height: 4px;
+      background: var(--red);
+      border-radius: 4px;
+      margin: 0 auto 16px;
+    }
+
+    /* SECTION */
+    section { padding: 70px 5%; }
+    .section-label {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--gray);
+      font-size: 0.95rem;
+      max-width: 480px;
+      margin: 0 auto 48px;
+    }
+
+    /* FEATURES */
+    .features-bg { background: var(--light); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .feature-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 26px 22px;
+      border: 1px solid #eeeeee;
+    }
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      background: #fff0f3;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      font-size: 1.3rem;
+    }
+    .feature-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .feature-card p {
+      font-size: 0.83rem;
+      color: var(--gray);
+      line-height: 1.55;
+    }
+
+    /* WHY */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .why-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 18px 16px;
+      border-radius: 12px;
+      border: 1.5px solid #eee;
+    }
+    .why-dot {
+      width: 10px;
+      height: 10px;
+      min-width: 10px;
+      border-radius: 50%;
+      background: var(--red);
+      margin-top: 5px;
+    }
+    .why-item p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* REVIEWS */
+    .reviews-bg { background: var(--light); }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .review-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 22px 20px;
+      border: 1px solid #eee;
+    }
+    .review-stars { color: var(--red); font-size: 0.9rem; margin-bottom: 10px; }
+    .review-text {
+      font-size: 0.85rem;
+      color: var(--black);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .review-author {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gray);
+    }
+    .review-date {
+      font-size: 0.72rem;
+      color: #aaa;
+      margin-top: 2px;
+    }
+
+    /* CTA BANNER */
+    .cta-banner {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 70px 5%;
+    }
+    .cta-banner h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+    }
+    .cta-banner p {
+      font-size: 0.95rem;
+      opacity: 0.88;
+      max-width: 440px;
+      margin: 0 auto 32px;
+    }
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+      color: var(--red);
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    .btn-white:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* FOOTER */
+    footer {
+      padding: 36px 5%;
+      border-top: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .footer-logo img { width: 30px; height: 30px; border-radius: 7px; }
+    footer p { font-size: 0.8rem; color: var(--gray); }
+    .footer-contact a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #25D366;
+      color: white;
+      text-decoration: none;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+    .footer-contact a:hover { opacity: 0.85; }
+
+    @media (max-width: 600px) {
+      .hero { padding: 52px 5% 50px; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <img src="CreditBook-splash.png" alt="CreditBook Logo" />
+      <span>CreditBook</span>
+    </div>
+    <a href="https://play.google.com/store/apps/details?id=com.encoded999.creditBook&pcampaignid=web_share" target="_blank" class="nav-cta">Download Free</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">⭐ Rated 5.0 on Google Play</div>
+    <img src="CreditBook-splash.png" alt="CreditBook App Icon" />
+    <h1>Never Forget <span>Who Owes You</span> Again</h1>
+    <p>CreditBook is the simplest way to track debts, set repayment reminders, and follow up — all without a single notebook.</p>
+    <div class="hero-actions">
+      <a href="https://play.google.com/store/apps/details?id=com.encoded999.creditBook&pcampaignid=web_share" target="_blank" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M3.18 23.76a2 2 0 0 0 2.09-.18l12.09-7.02-3.34-3.34-10.84 10.54zm-1.06-20.7A2 2 0 0 0 2 4.01v15.98a2 2 0 0 0 .12.95L13.44 9.62 2.12 3.06zM20.47 10.3 17.3 8.46 13.73 12l3.57 3.57 3.18-1.85a2 2 0 0 0 0-3.42zM5.27.42A2 2 0 0 0 2.12.24L13.44 11.38 16.78 8.04 5.27.42z"/></svg>
+        Get it on Google Play
+      </a>
+    </div>
+    <div class="hero-rating">
+      <span class="stars">★★★★★</span>
+      <span>5.0 · Loved by traders & shop owners</span>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-bg">
+    <div class="section-label">What it does</div>
+    <div class="divider"></div>
+    <h2 class="section-title">Everything you need to manage debts</h2>
+    <p class="section-sub">Built for shop owners, traders, and anyone who lends money regularly.</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📋</div>
+        <h3>Record Debts Instantly</h3>
+        <p>Add a name, amount, reason, and date in seconds. No extra steps.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔔</div>
+        <h3>Due Date Reminders</h3>
+        <p>Get notified when repayment is close or overdue. Never miss a follow-up.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📞</div>
+        <h3>Contact Debtors Instantly</h3>
+        <p>Call, text, or message on WhatsApp directly from inside the app.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Full Debt Summary</h3>
+        <p>See total owed, total given out, and total recovered — all in one view.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>Smart History Tracking</h3>
+        <p>Every repayment, update, or adjustment is logged per person.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💾</div>
+        <h3>Backup Your Records</h3>
+        <p>Your data is secured and backed up so you never lose a record.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section>
+    <div class="section-label">Why choose it</div>
+    <div class="divider"></div>
+    <h2 class="section-title">Designed for people who lend money</h2>
+    <p class="section-sub">Simple enough for anyone — powerful enough for your business.</p>
+    <div class="why-grid">
+      <div class="why-item"><div class="why-dot"></div><p>Stay organized and stop forgetting debts</p></div>
+      <div class="why-item"><div class="why-dot"></div><p>Quick entries save you time every day</p></div>
+      <div class="why-item"><div class="why-dot"></div><p>Timely reminders make debt recovery easier</p></div>
+      <div class="why-item"><div class="why-dot"></div><p>All records secured in one place</p></div>
+      <div class="why-item"><div class="why-dot"></div><p>Works for personal and business lending</p></div>
+      <div class="why-item"><div class="why-dot"></div><p>Easy for all ages — no tech skills needed</p></div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-bg">
+    <div class="section-label">User reviews</div>
+    <div class="divider"></div>
+    <h2 class="section-title">What users are saying</h2>
+    <p class="section-sub">Real reviews from the Google Play Store.</p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The design is simple and fast. I like that I can quickly add customers and monitor debts without going through too many screens. Great job."</p>
+        <div class="review-author">Tom Austin</div>
+        <div class="review-date">June 5, 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"I started using this app to manage debts for my shop and it has made record keeping much easier. The interface is clean and responsive."</p>
+        <div class="review-author">Christie Gold</div>
+        <div class="review-date">June 5, 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Great start. I would love to see biometric login and PIN protection for extra security since customer financial information is stored in the app."</p>
+        <div class="review-author">Oluwa Gbayi</div>
+        <div class="review-date">June 5, 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"This app is helpful for traders and small business owners. The backup feature is a nice addition because I don't have to worry about losing my records."</p>
+        <div class="review-author">Ojo Moses</div>
+        <div class="review-date">June 5, 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"This app is helpful for traders and small business owners. Exactly what I needed."</p>
+        <div class="review-author">Saviour Archibong</div>
+        <div class="review-date">June 5, 2026</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Great concept and easy setup. It would be even better with cloud sync across multiple devices, but overall the experience has been smooth."</p>
+        <div class="review-author">Google Play User</div>
+        <div class="review-date">June 5, 2026</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner">
+    <h2>Start tracking your debts today — for free</h2>
+    <p>Download CreditBook on Android and take full control of your money records.</p>
+    <a href="https://play.google.com/store/apps/details?id=com.encoded999.creditBook&pcampaignid=web_share" target="_blank" class="btn-white">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#FE2C55"><path d="M3.18 23.76a2 2 0 0 0 2.09-.18l12.09-7.02-3.34-3.34-10.84 10.54zm-1.06-20.7A2 2 0 0 0 2 4.01v15.98a2 2 0 0 0 .12.95L13.44 9.62 2.12 3.06zM20.47 10.3 17.3 8.46 13.73 12l3.57 3.57 3.18-1.85a2 2 0 0 0 0-3.42zM5.27.42A2 2 0 0 0 2.12.24L13.44 11.38 16.78 8.04 5.27.42z"/></svg>
+      Download on Google Play
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <img src="CreditBook-splash.png" alt="CreditBook" />
+      <span>CreditBook</span>
+    </div>
+    <p>© 2026 CreditBook. All rights reserved.</p>
+    <div class="footer-contact">
+      <a href="https://wa.me/2349131425976" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Contact on WhatsApp
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>
